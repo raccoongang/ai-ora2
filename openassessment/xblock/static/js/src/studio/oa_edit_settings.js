@@ -29,6 +29,8 @@ export class EditSettingsView {
     this.onFileUploadTypeChanged = this.onFileUploadTypeChanged.bind(this);
     this.onTeamsEnabledChange = this.onTeamsEnabledChange.bind(this);
     this.displayName = this.displayName.bind(this);
+    this.aiCompletion = this.aiCompletion.bind(this);
+    this.aiModel = this.aiModel.bind(this),
     this.textResponseNecessity = this.textResponseNecessity.bind(this);
     this.textResponseEditor = this.textResponseEditor.bind(this);
     this.fileUploadResponseNecessity = this.fileUploadResponseNecessity.bind(this);
@@ -206,6 +208,19 @@ export class EditSettingsView {
   displayName(name) {
     const sel = $('#openassessment_title_editor', this.settingsElement);
     return Fields.stringField(sel, name);
+  }
+
+  aiCompletion(value) {
+    const sel = $('#openassessment_ai_completion', this.settingsElement);
+    return Fields.stringField(sel, value);
+  }
+
+  aiModel(value) {
+    const sel = $('#openassessment_ai_model_selector', this.settingsElement);
+     if (value !== undefined) {
+      sel.val(value);
+    }
+    return sel.val();
   }
 
   /**

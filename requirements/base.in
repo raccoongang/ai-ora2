@@ -29,3 +29,4 @@ path.py
 python-dateutil
 pytz
 voluptuous
+openai

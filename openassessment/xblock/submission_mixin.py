@@ -370,6 +370,7 @@ class SubmissionMixin:
                 "answer": submission["answer"],
             }
         )
+
         return submission
 
     def create_submission(self, student_item_dict, student_sub_data):
@@ -400,6 +401,21 @@ class SubmissionMixin:
                 "submitted_at": submission["submitted_at"],
                 "answer": submission["answer"],
             }
+        )
+
+        # TODO: Process imports in another way or maybe remove any custom code from ORA2
+        from .automatic_assessment import generate_automatic_assessment
+        from openassessment.xblock.data_conversion import create_rubric_dict
+
+        # TODO: Call as a Celery task if decided to leave code here.
+        generate_automatic_assessment(
+            self.prompt,
+            self.rubric_criteria,
+            submission,
+            self.get_student_item_dict()["student_id"],  # TODO: Should be changed to AI staff user.
+            create_rubric_dict(self.prompts, self.rubric_criteria_with_labels),
+            self.ai_completion,
+            self.ai_model
         )
 
         return submission

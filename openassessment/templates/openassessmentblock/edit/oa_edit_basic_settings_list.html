@@ -162,4 +162,24 @@
             {% trans "Specify whether learners can see the rubric while they are working on their response." %}
         </p>
     </li>
+    <li id="openassessment_ai_completion_wrapper" class="field comp-setting-entry">
+        <div class="wrapper-comp-setting">
+            <label for="openassessment_ai_completion" class="setting-label">{% trans "Prompt for AI completion"%}</label>
+            <textarea style="min-height:200px;width:45%;" id="openassessment_ai_completion" class="input setting-input">{{ ai_completion }}</textarea>
+        </div>
+        <p class="setting-help">{% trans "Available template variables are: question, student_answer, prompts" %}</p>
+    </li>
+    <li id="openassessment_ai_model_wrapper" class="field comp-setting-entry">
+        <div id="openassessment_ai_model_selection_wrapper" class="wrapper-comp-setting">
+                <div class="wrapper-comp-setting">
+                    <label for="openassessment_ai_model_selector" class="setting-label">{% trans "Select AI model"%}</label>
+                    <select id="openassessment_ai_model_selector" class="input setting-input" name="ai_model selection">
+                        {% for ai_model, ai_model_name in ai_models.items %}
+                            <option value='{{ ai_model }}' {% if selected_ai_model == ai_model %} selected="true" {% endif %}>{{ ai_model_name }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+    </li>
 </ul>

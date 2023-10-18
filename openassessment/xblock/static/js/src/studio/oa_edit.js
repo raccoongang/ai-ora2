@@ -237,6 +237,8 @@ export class StudioView {
       feedback_default_text: this.rubricView.feedback_default_text(),
       criteria: this.rubricView.criteriaDefinition(),
       title: this.settingsView.displayName(),
+      aiCompletion: this.settingsView.aiCompletion(),
+      aiModel: this.settingsView.aiModel(),
       submissionStart: this.scheduleView.submissionStart(),
       submissionDue: this.scheduleView.submissionDue(),
       assessments: this.assessmentsStepsView.assessmentsDescription(),

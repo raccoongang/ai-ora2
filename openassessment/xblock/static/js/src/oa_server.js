@@ -473,6 +473,8 @@ export class Server {
       teams_enabled: options.teamsEnabled,
       selected_teamset_id: options.selectedTeamsetId,
       show_rubric_during_response: options.showRubricDuringResponse,
+      ai_completion: options.aiCompletion,
+      ai_model: options.aiModel,
     });
     return $.Deferred((defer) => {
       $.ajax({

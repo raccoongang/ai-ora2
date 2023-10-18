@@ -171,4 +171,6 @@ EDITOR_UPDATE_SCHEMA = Schema({
         })
     ],
     Required('show_rubric_during_response', default=False): bool,
+    Required('ai_completion'): utf8_validator,
+    Required('ai_model'): utf8_validator,
 })

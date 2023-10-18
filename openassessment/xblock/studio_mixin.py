@@ -15,6 +15,7 @@ from xblock.fields import List, Scope
 from django.template.loader import get_template
 from django.utils.translation import gettext_lazy
 
+from openassessment.xblock.automatic_assessment import AI_MODELS_LIST
 from openassessment.xblock.data_conversion import (create_rubric_dict, make_django_template_key,
                                                    update_assessments_format)
 from openassessment.xblock.defaults import DEFAULT_EDITOR_ASSESSMENTS_ORDER, DEFAULT_RUBRIC_FEEDBACK_TEXT
@@ -196,6 +197,9 @@ class StudioMixin:
             'rubric_reuse_enabled': self.is_rubric_reuse_enabled,
             'rubric_reuse_data': rubric_reuse_data,
             'block_location': str(self.location),
+            'ai_completion': self.ai_completion,
+            'selected_ai_model': self.ai_model,
+            'ai_models': AI_MODELS_LIST,
         }
 
     @XBlock.json_handler
@@ -299,6 +303,8 @@ class StudioMixin:
         self.teams_enabled = bool(data.get('teams_enabled', False))
         self.selected_teamset_id = data.get('selected_teamset_id', '')
         self.show_rubric_during_response = data.get('show_rubric_during_response', False)
+        self.ai_completion = data['ai_completion']
+        self.ai_model = data.get('ai_model', '')
 
         return {'success': True, 'msg': self._('Successfully updated OpenAssessment XBlock')}
 

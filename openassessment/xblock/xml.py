@@ -749,6 +749,10 @@ def serialize_content_to_xml(oa_block, root):
     title = etree.SubElement(root, 'title')
     title.text = str(oa_block.title)
 
+    # Set ai_completion template
+    ai_completion = etree.SubElement(root, 'ai_completion')
+    ai_completion.text = str(oa_block.ai_completion)
+
     # Assessment list
     assessments_root = etree.SubElement(root, 'assessments')
     serialize_assessments(assessments_root, oa_block)
@@ -959,6 +963,17 @@ def parse_from_xml(root):
         raise UpdateFromXmlError('Every assessment must contain an "assessments" element.')
     assessments = parse_assessments_xml(assessments_el)
 
+    # Retrieve the ai_completion
+    ai_completion_el = root.find('ai_completion')
+    if ai_completion_el is None:
+        raise UpdateFromXmlError('Every assessment must contain a "ai_completion" element.')
+    ai_completion = _safe_get_text(ai_completion_el)
+
+    ai_model_el = root.find('ai_model')
+    if ai_model_el is None:
+        raise UpdateFromXmlError('Every assessment must contain a "ai_model" element.')
+    ai_model = _safe_get_text(ai_completion_el)
+
     return {
         'title': title,
         'prompts': prompts,
@@ -982,6 +997,8 @@ def parse_from_xml(root):
         'teams_enabled': teams_enabled,
         'selected_teamset_id': selected_teamset_id,
         'show_rubric_during_response': show_rubric_during_response,
+        'ai_completion': ai_completion,
+        'ai_model': ai_model,
     }
 
 

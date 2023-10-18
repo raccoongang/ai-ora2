@@ -51,6 +51,7 @@ from openassessment.xblock.openassesment_template_mixin import OpenAssessmentTem
 from openassessment.xblock.xml import parse_from_xml, serialize_content_to_xml
 from openassessment.xblock.editor_config import AVAILABLE_EDITORS
 from openassessment.xblock.load_static import LoadStatic
+from openassessment.xblock.automatic_assessment import QUESTION_TEMPLATE1
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -304,6 +305,18 @@ class OpenAssessmentBlock(MessageMixin,
         default=False,
         scope=Scope.settings,
         help="Should the rubric be visible to learners in the response section?"
+    )
+
+    ai_completion = String(
+        scope=Scope.settings,
+        default=QUESTION_TEMPLATE1,
+        help="AI question template.",
+    )
+
+    ai_model = String(
+        scope=Scope.settings,
+        default="",
+        help="AI model.",
     )
 
     @property
@@ -901,6 +914,7 @@ class OpenAssessmentBlock(MessageMixin,
         block.teams_enabled = config['teams_enabled']
         block.selected_teamset_id = config['selected_teamset_id']
         block.show_rubric_during_response = config['show_rubric_during_response']
+        block.ai_model = config['ai_model']
         return block
 
     @property
@@ -1031,6 +1045,7 @@ class OpenAssessmentBlock(MessageMixin,
             context_dict = {}
 
         context_dict['text_response_editor'] = self.text_response_editor
+        context_dict['ai_model'] = self.ai_model
 
         template = get_template(path)
         return Response(template.render(context_dict), content_type='application/html', charset='UTF-8')
